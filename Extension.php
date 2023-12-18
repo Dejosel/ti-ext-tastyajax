@@ -35,8 +35,33 @@ class Extension extends BaseExtension
     public function registerComponents()
     {
         return [
-// Remove this line and uncomment the line below to activate
-//            'Dejosel\TastyAjax\Components\MyComponent' => 'myComponent',
+            \Dejosel\TastyAjax\Components\MenuAjax::class => [
+                'code' => 'menuajax',
+                'name' => 'Menu Ajax',
+                'description' => 'Carga Menu de Categorias mediante Ajax',
+            ],
+        ];
+    }
+
+    public function registerApiResources()
+    {
+        return [
+            'menusAjax' => [
+                'controller' => \Dejosel\TastyAjax\ApiResources\Menus::class,
+                'name' => 'Menus',
+                'description' => 'An API resource for ajax menus',
+                'actions' => [
+                    'index:all', 'show:all',
+                ],
+            ],
+            'tastyajax' => [
+                'controller' => \Dejosel\TastyAjax\ApiResources\Categories::class,
+                'name' => 'Categories & menu',
+                'description' => 'An API resource for ajax categories & menus',
+                'actions' => [
+                    'index:all', 'show:all',
+                ],
+            ],
         ];
     }
 
