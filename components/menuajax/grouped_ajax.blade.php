@@ -1,9 +1,14 @@
-<input type="text" id="searchInput" placeholder="Buscar menú..."><button id="clearButton" type="button">Limpiar</button>
-
-
-
+@if (!$hideMenuSearch)
+<div class="filter-container mt-3 d-none d-md-flex">
+    <input type="text" class="searchInput" placeholder="Buscar menú...">
+    <div class="button-search-menu-ajax">
+        <button class="clearButton" type="button">Limpiar</button>
+    </div>
+</div>
+@else
+<input type="hidden" class="searchInput">
+@endif
 <div class="products margin-sus columns-3 mt-5" id="menusData">
-
     <!-- here the menuAjax -->
 </div>
 <input type="hidden" id="orderDateTime" value="{{ Location::orderDateTime() }}">

@@ -354,15 +354,17 @@ const observer = new MutationObserver(function (mutationsList) {
 const config = { childList: true, subtree: true };
 observer.observe(cartCountSpan[0], config);
 
-$('#searchInput').on('keyup', function() {
+$('.searchInput').on('keyup', function() {
     const inputText = $(this).val().trim();
     searchMenus(inputText);
 });
 
-const initialInputText = $('#searchInput').val().trim();
-searchMenus(initialInputText);
+$('.searchInput').each(function() {
+    const initialInputText = $(this).val().trim();
+    searchMenus(initialInputText);
+});
 
-$('#clearButton').on('click', function() {
-    $('#searchInput').val(''); 
+$('.clearButton').on('click', function() {
+    $(this).siblings('.searchInput').val(''); 
     searchMenus('');
 });
