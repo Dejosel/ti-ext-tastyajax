@@ -11,6 +11,10 @@
 <div class="products margin-sus columns-3 mt-5" id="menusData">
     <!-- here the menuAjax -->
 </div>
+
+<div id="menuAjaxUrl" data-url="{{ site_url('/api/menusAjax') }}"></div>
+<div id="tastyAjaxUrl" data-url="{{ site_url('/api/tastyajax') }}"></div>
+
 <input type="hidden" id="orderDateTime" value="{{ Location::orderDateTime() }}">
 <input type="hidden" id="menuCollapseCategoriesAfter" value="{{ $menuCollapseCategoriesAfter }}">
 <input type="hidden" id="showMenuImages" value="{{ $showMenuImages }}">

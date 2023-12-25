@@ -16,8 +16,9 @@ $(document).on('show.bs.collapse', '.collapse', function () {
 });
 function searchMenus(inputText) {
     if (inputText !== '') {
+        var menuAjaxUrl = $('#menuAjaxUrl').data('url');
         $.ajax({
-            url: "/tastyigniter/api/menusAjax",
+            url: menuAjaxUrl,
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -33,12 +34,13 @@ function searchMenus(inputText) {
                 }
             },
             error: function(error) {
-                console.error('Error en la solicitud AJAX:', error);
+                console.error('Error en la solicitud AJAX:', error.status, error.statusText);
             }
         });
     } else {
+        var tastyAjaxUrl = $('#tastyAjaxUrl').data('url');
         $.ajax({
-            url: "/tastyigniter/api/tastyajax",
+            url: tastyAjaxUrl,
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -66,7 +68,7 @@ function buildMenusHtml(data, included) {
         let collapseCategoriesAfter = $('#menuCollapseCategoriesAfter').val();
         let isCollapsed = index >= collapseCategoriesAfter;
 
-        let categoryHeading = `<div id="category-${category.attributes.Alias}-heading" role="tab" class="scroll_section">`;
+        let categoryHeading = `<div id="category-${category.attributes.Alias}-heading" role="tab" class="scroll_section 1q2   ">`;
         categoryHeading += `<h4 class="category-title cursor-pointer${isCollapsed ? ' collapsed' : ''}" `;
         categoryHeading += `data-bs-toggle="collapse" data-bs-target="#category-${category.attributes.Alias}-collapse" `;
         categoryHeading += `aria-expanded="${!isCollapsed}" data-category-name="${category.attributes.Alias}" `;
