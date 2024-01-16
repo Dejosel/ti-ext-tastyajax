@@ -370,3 +370,80 @@ $('.clearButton').on('click', function() {
     $(this).siblings('.searchInput').val(''); 
     searchMenus('');
 });
+
+
+ //Scroll smooth
+
+
+// Get the header height
+const headerHeight = document.querySelector('header').offsetHeight;
+document.querySelector('.header-height').style.height = `${headerHeight}px`;
+
+// Get the tabs_nav offset top and height
+const tabsNav = document.querySelector('.tabs_nav');
+const tabsNavOffsetTop = tabsNav.offsetTop;
+const tabsNavHeight = tabsNav.offsetHeight;
+
+// Add an event listener listening for scroll
+window.addEventListener("scroll", handleScroll);
+
+function handleScroll() {
+  // Get current scroll position
+  const scrollY = window.scrollY;
+
+  // Change tabs_nav_height based on scroll position
+  const tabsNavHeightElement = document.querySelector('.tabs_nav_height');
+  if (scrollY > tabsNavOffsetTop) {
+    tabsNavHeightElement.style.height = `${tabsNavHeight}px`;
+  } else {
+    tabsNavHeightElement.style.height = '0';
+  }
+
+  // Loop through scroll_sections to determine the active section
+  document.querySelectorAll(".scroll_section").forEach(current => {
+    const sectionHeight = current.offsetHeight;
+    const sectionTop = (current.getBoundingClientRect().top + window.scrollY) - headerHeight - tabsNavHeight - 5;
+    const sectionId = current.getAttribute("id");
+
+    // Add or remove 'selected' class based on scroll position
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      document.querySelectorAll(".scroll_section").forEach(section => {
+        section.classList.remove("selected");
+      });
+      current.classList.add("selected");
+
+      // Update tabs_nav active class
+      const thisIndex = Array.from(document.querySelectorAll(".scroll_section")).indexOf(current);
+      document.querySelectorAll('.tabs_nav ul li').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tabs_nav ul li')[thisIndex].classList.add('active');
+    }
+  });
+}
+
+// Handle click on tabs_nav links
+document.querySelectorAll('.tabs_nav ul li').forEach(tab => {
+  tab.addEventListener('click', handleTabClick);
+});
+
+function handleTabClick(event) {
+  event.preventDefault();
+
+  const triggerIndex = Array.from(document.querySelectorAll('.tabs_nav ul li')).indexOf(event.currentTarget);
+  const triggerIndexOffset = document.querySelectorAll(".scroll_section")[triggerIndex].offsetTop;
+
+  // Remove 'active' class from all tabs
+  document.querySelectorAll('.tabs_nav ul li').forEach(tab => {
+    tab.classList.remove('active');
+  });
+
+  // Add 'active' class to the clicked tab
+  event.currentTarget.classList.add('active');
+
+  // Scroll to the corresponding section
+  window.scrollTo({
+    top: triggerIndexOffset - headerHeight - tabsNavHeight,
+    behavior: 'smooth'
+  });
+}
